@@ -29,33 +29,33 @@ public class CategoriaController {
 	@Autowired
 	private CategoriaRepository repository;
 	
-	@GetMapping
+	@GetMapping("/buscar")
 	public ResponseEntity<List<Categoria>> getAll(){
 		return ResponseEntity.ok(repository.findAll());
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/buscar/{idCategoria}")
 	public ResponseEntity<Categoria> getById(@PathVariable Long id){
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@GetMapping("/tipo/{tipoCategoria}")
+	@GetMapping("/buscar/tipo/{tipoCategoria}")
 	public ResponseEntity<List<Categoria>> getByTipo(@PathVariable String tipoCategoria){
 		return ResponseEntity.ok(repository.findAllByTipoCategoriaContainingIgnoreCase(tipoCategoria));
 	}
 	
-	@PostMapping
+	@PostMapping("/cadastrar")
 	public ResponseEntity<Categoria> post (@Valid @RequestBody Categoria categoria){
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
 	}
 	
-	@PutMapping
+	@PutMapping("/atualizar")
 	public ResponseEntity<Categoria> put (@Valid @RequestBody Categoria categoria){
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/deletar/{id}")
 	public void delete (@PathVariable Long id) {
 		repository.deleteById(id);
 	}

@@ -32,24 +32,24 @@ public class ProdutoController {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	@GetMapping
+	@GetMapping("/buscar")
 	public ResponseEntity<List<Produto>> GetAll(){
 		return ResponseEntity.ok(produtoRepository.findAll());
 	}
 	
-	@GetMapping("/{idProduto}")
+	@GetMapping("/buscar/{idProduto}")
 	public ResponseEntity<Produto> GetById(@PathVariable Long idProduto){
 		return produtoRepository.findById(idProduto)
 				.map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@GetMapping("/nome/{nomeProduto}")
+	@GetMapping("buscar/nome/{nomeProduto}")
 	public ResponseEntity<List<Produto>> GetByNomeProduto(@PathVariable String nomeProduto){
 		return ResponseEntity.ok(produtoRepository.findAllByNomeProdutoContainingIgnoreCase(nomeProduto));
 	}
 	
-	@PostMapping
+	@PostMapping("/cadastrar")
 	public ResponseEntity<Produto> post (@Valid @RequestBody Produto produto){
 		if (categoriaRepository.existsById(produto.getCategoria().getIdCategoria()))
 			return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
@@ -57,7 +57,7 @@ public class ProdutoController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 	
-	@PutMapping
+	@PutMapping("/atualizar")
 	public ResponseEntity<Produto> put (@Valid @RequestBody Produto produto){
 			if (produtoRepository.existsById(produto.getIdProduto())){
 			
@@ -70,7 +70,7 @@ public class ProdutoController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/deletar/{id}")
 	public ResponseEntity<?> deletePostagem(@PathVariable Long id) {
 		
 		return produtoRepository.findById(id)

@@ -12,7 +12,7 @@ import com.generation.casaDasMudas.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	
-	public Optional<Usuario> findByEmailUsuario(String emailUsuario);;
+	public Optional<Usuario> findByEmailUsuario(String emailUsuario);
 
 	public List<Usuario> findAllByNomeUsuarioContainingIgnoreCase(@Param("nome") String nomeUsuario);
 
